@@ -1,6 +1,7 @@
 import pygame
 from pygame.sprite import Sprite
 
+
 class Bullet(Sprite):
     """a class to manage bullets from the ship"""
 
@@ -14,7 +15,7 @@ class Bullet(Sprite):
         self.rect.centerx = ship.rect.centerx
         self.rect.top = ship.rect.top
 
-        # store the position of the bullet in float bumber
+        # store the position of the bullet in float number
         self.y = float(self.rect.y)
 
         self.color = ai_settings.bullet_color
