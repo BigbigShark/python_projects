@@ -3,8 +3,10 @@ from pygame.sprite import Group
 
 from settings import Settings
 from game_stats import GameStats
+from button import Button
 from ship import Ship
 import game_functions as gf
+from scoreboard import Scoreboard
 
 
 def run_game():
@@ -16,8 +18,13 @@ def run_game():
     )
     pygame.display.set_caption("Alien Invasion")
 
+    # create play button
+    play_button = Button(ai_settings, screen, "Play")
+
     # create an instance to store game statistics
     stats = GameStats(ai_settings)
+    # create an instance to store game statistics and create a scoreboard
+    sb = Scoreboard(ai_settings, stats, screen)
 
     # create a ship
     ship = Ship(ai_settings, screen)
@@ -29,14 +36,14 @@ def run_game():
 
     # start the main loop of the game
     while True:
-        gf.check_events(ai_settings, screen, ship, bullets)
+        gf.check_events(ai_settings, stats, screen, sb, ship, bullets, aliens, play_button)
 
         if stats.game_active is True:
             ship.update()
-            gf.update_bullets(ai_settings, screen, ship, bullets, aliens)
-            gf.update_aliens(ai_settings, stats, screen, ship, bullets, aliens)
+            gf.update_bullets(ai_settings, screen, stats, sb, ship, bullets, aliens)
+            gf.update_aliens(ai_settings, stats, screen, sb, ship, bullets, aliens)
 
-        gf.update_screen(ai_settings, screen, ship, bullets, aliens)
+        gf.update_screen(ai_settings, screen, stats, sb, ship, bullets, aliens, play_button)
 
 
 if __name__ == "__main__":
